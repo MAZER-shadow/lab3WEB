@@ -1,0 +1,406 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+
+body {
+    background-image: url('/resources/img/background.jpg'); /* Путь к вашему изображению */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative; /* Добавлено для псевдоэлемента */
+}
+
+/* Добавьте затемнение фона для лучшей читаемости */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Уровень затемнения */
+    z-index: -1;
+}
+
+.container {
+    background: linear-gradient(135deg, rgba(173, 216, 230, 0.9), rgba(224, 255, 255, 0.9));
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    gap: 30px;
+}
+
+.header {
+    width: 200px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.student-info h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.student-info p {
+    font-size: 14px;
+    color: #555;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.graph-container {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#graphCanvas {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    max-width: 100%;
+    background-color: white;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+input[type="text"] {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+#submit-btn {
+    padding: 12px 0px;
+    background-color: #4CAF50;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    margin-top: 0px;
+}
+
+#submit-btn:hover {
+    background-color: #45a049;
+}
+
+#results {
+    margin-top: 0;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+#results h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/*!* Разрешить перенос текста в заголовках колонок *!*/
+/*.ui-datatable th {*/
+/*    !* Это гарантирует, что текст не будет пытаться растянуть колонку *!*/
+/*    white-space: normal;*/
+/*    !* Убедитесь, что ширина колонки задана *!*/
+/*    width: 100px; !* Установите подходящую ширину *!*/
+/*}*/
+
+/* Ховер-эффект */
+.result-header {
+    width: 5%;
+}
+
+#results-table {
+    width: 100%;
+    border-collapse: collapse; /* Изменено с separate на collapse */
+    font-size: 14px;
+    table-layout: fixed; /* Изменено с fixed на auto */
+    min-width: 800px; /* Минимальная ширина таблицы */
+}
+
+#results-table tbody tr:hover {
+    background-color: #f1f8ff;
+}
+
+/* Стили для ячеек времени */
+.time-cell {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    /* Измените этот блок, чтобы жестко зафиксировать ширину */
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+    /* ---------------------------------------------------- */
+    color: #555;
+}
+
+/* Вертикальные разделители для времени */
+.time-cell:not(:last-child) {
+    border-right: 1px solid #eaeaea;
+}
+
+/* Стили для результатов */
+.hit {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.miss {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+#clear-btn {
+    padding: 12px 12px;
+    background-color: #f44336;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    flex: 1;
+}
+
+#clear-btn:hover {
+    background-color: #d32f2f;
+}
+
+#graphCanvas {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    max-width: 100%;
+    background-color: white;
+    cursor: crosshair; /* Добавляем это свойство */
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-container button:hover {
+    background-color: #45a049;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.student-info {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+#back-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+#back-btn:hover {
+    background-color: #45a049;
+}
+
+.student-header {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.student-header p {
+    margin: 5px 0;
+    color: #333;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* ... (Остальной код file.css) ... */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+/* Добавленные стили для ссылки в main.xhtml */
+.top-left-nav {
+    margin-bottom: 25px; /* Отступ от элементов ниже */
+    text-align: left; /* Убедимся, что она слева */
+}
+
+.top-left-nav a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.top-left-nav a:hover {
+    background-color: #45a049;
+}
