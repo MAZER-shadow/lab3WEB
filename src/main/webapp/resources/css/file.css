@@ -7,7 +7,7 @@
 
 
 body {
-    background-image: url('/resources/img/background.jpg'); /* Путь к вашему изображению */
+    background-image: url('/resources/img/background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -17,10 +17,9 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    position: relative; /* Добавлено для псевдоэлемента */
+    position: relative;
 }
 
-/* Добавьте затемнение фона для лучшей читаемости */
 body::before {
     content: "";
     position: fixed;
@@ -28,7 +27,7 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3); /* Уровень затемнения */
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: -1;
 }
 
@@ -163,49 +162,35 @@ input[type="text"]:focus {
     font-size: 18px;
 }
 
-/*!* Разрешить перенос текста в заголовках колонок *!*/
-/*.ui-datatable th {*/
-/*    !* Это гарантирует, что текст не будет пытаться растянуть колонку *!*/
-/*    white-space: normal;*/
-/*    !* Убедитесь, что ширина колонки задана *!*/
-/*    width: 100px; !* Установите подходящую ширину *!*/
-/*}*/
-
-/* Ховер-эффект */
 .result-header {
     width: 5%;
 }
 
 #results-table {
     width: 100%;
-    border-collapse: collapse; /* Изменено с separate на collapse */
+    border-collapse: collapse;
     font-size: 14px;
-    table-layout: fixed; /* Изменено с fixed на auto */
-    min-width: 800px; /* Минимальная ширина таблицы */
+    table-layout: fixed;
+    min-width: 800px;
 }
 
 #results-table tbody tr:hover {
     background-color: #f1f8ff;
 }
 
-/* Стили для ячеек времени */
 .time-cell {
     font-family: 'Courier New', monospace;
     font-size: 13px;
-    /* Измените этот блок, чтобы жестко зафиксировать ширину */
     width: 35px;
     min-width: 35px;
     max-width: 35px;
-    /* ---------------------------------------------------- */
     color: #555;
 }
 
-/* Вертикальные разделители для времени */
 .time-cell:not(:last-child) {
     border-right: 1px solid #eaeaea;
 }
 
-/* Стили для результатов */
 .hit {
     color: #28a745;
     font-weight: 600;
@@ -243,7 +228,7 @@ input[type="text"]:focus {
     border-radius: 5px;
     max-width: 100%;
     background-color: white;
-    cursor: crosshair; /* Добавляем это свойство */
+    cursor: crosshair;
 }
 
 .login-container {
@@ -371,7 +356,6 @@ input[type="text"]:focus {
     }
 }
 
-/* ... (Остальной код file.css) ... */
 @keyframes fadeOut {
     from {
         opacity: 1;
@@ -383,10 +367,9 @@ input[type="text"]:focus {
     }
 }
 
-/* Добавленные стили для ссылки в main.xhtml */
 .top-left-nav {
-    margin-bottom: 25px; /* Отступ от элементов ниже */
-    text-align: left; /* Убедимся, что она слева */
+    margin-bottom: 25px;
+    text-align: left;
 }
 
 .top-left-nav a {

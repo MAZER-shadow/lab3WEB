@@ -1,4 +1,4 @@
-/* Общие сбросы и шрифт - скопировано из file.css */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,10 +6,8 @@
     font-family: 'Arial', sans-serif;
 }
 
-/* Стилизация тела страницы (фон и затемнение) - скопировано из file.css */
 body {
-    /* Путь к вашему фоновому изображению. Проверьте, что он корректен относительно вашего проекта. */
-    background-image: url('resources/img/background.jpg');
+    background-image: url('/resources/img/background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -22,7 +20,6 @@ body {
     position: relative;
 }
 
-/* Затемнение фона для лучшей читаемости */
 body::before {
     content: "";
     position: fixed;
@@ -30,22 +27,20 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3); /* Уровень затемнения */
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: -1;
 }
 
-/* Основной контейнер - использует градиент и тень из file.css */
 #main-container {
     background: linear-gradient(135deg, rgba(173, 216, 230, 0.9), rgba(224, 255, 255, 0.9));
     border-radius: 10px;
     padding: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     width: 90%;
-    max-width: 600px; /* Адаптированный размер для стартовой страницы */
+    max-width: 600px;
     margin: auto;
 }
 
-/* Стили для блока с информацией о студенте (шапка) */
 #head-area {
     padding: 10px 0;
     margin-bottom: 20px;
@@ -66,11 +61,10 @@ body::before {
     flex: 1;
 }
 
-/* Стилизация ссылок - использует цвет, схожий с кнопками в file.css */
 .center-aligned a {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #4CAF50; /* Зеленый цвет из file.css */
+    background-color: #4CAF50;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -82,9 +76,6 @@ body::before {
     background-color: #45a049;
 }
 
-/* ... (Остальной код style.css) ... */
-
-/* Стили для блока с информацией о студенте (шапка) */
 #head-area {
     padding: 10px 0;
     margin-bottom: 20px;
@@ -101,13 +92,12 @@ body::before {
     margin-bottom: 10px;
 }
 
-/* Стили для нового "подвала" шапки */
 .header-footer {
     display: flex;
     justify-content: space-between;
     width: 100%;
     padding-top: 10px;
-    border-top: 1px dashed #c0e0f0; /* Добавляем разделитель для футера */
+    border-top: 1px dashed #c0e0f0;
 }
 
 .center-aligned, .left-aligned, .right-aligned {
@@ -115,11 +105,10 @@ body::before {
     flex: 1;
 }
 
-/* Стилизация ссылок в подвале шапки */
 .header-footer .right-aligned a {
     display: inline-block;
-    padding: 5px 15px; /* Уменьшил паддинг, чтобы выглядело как часть футера */
-    background-color: #4CAF50; /* Зеленый цвет из file.css */
+    padding: 5px 15px;
+    background-color: #4CAF50;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -130,4 +119,3 @@ body::before {
 .header-footer .right-aligned a:hover {
     background-color: #45a049;
 }
-/* ... (Остальной код style.css) ... */
