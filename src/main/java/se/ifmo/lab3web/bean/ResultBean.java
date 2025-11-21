@@ -1,6 +1,5 @@
 package se.ifmo.lab3web.bean;
 
-
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
