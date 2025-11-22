@@ -1,6 +1,3 @@
-
-// main.js
-
 const graphDrawer = new GraphDrawer('graphCanvas');
 
 document.getElementById("main-form:y-input").addEventListener("input", (ev) => {
@@ -37,9 +34,8 @@ function attachYInputValidator() {
     }
 }
 
-function handleSliderChange(event, ui) {
-    var newR = ui.value;
-    if (!isNaN(newR) && newR >= 1 && newR <= 4) {
+function handleRChangeComplete(newR) {
+    if (!isNaN(newR) && (newR == 1 || newR == 1.5 || newR == 2 || newR == 2.5 || newR == 3)) {
         graphDrawer.setCurrentR(newR);
         graphDrawer.drawGraph(newR);
     } else {
@@ -50,14 +46,10 @@ function handleSliderChange(event, ui) {
 
 function handleClearComplete() {
     graphDrawer.clearPoints();
-    const newR = parseFloat(document.getElementById('main-form:r-input').value);
-    if (!isNaN(newR) && newR >= 1 && newR <= 4) {
-        graphDrawer.setCurrentR(newR);
-        graphDrawer.drawGraph(newR);
-    } else {
-        graphDrawer.setCurrentR(null);
-        graphDrawer.drawGraph(null);
-    }
+
+    graphDrawer.setCurrentR(null);
+    graphDrawer.drawGraph(null);
+
     const resultsBody = document.querySelector('#results-table tbody');
     const rowElement = resultsBody.querySelector('tr:first-child');
     const cells = rowElement.querySelectorAll('td');
@@ -72,17 +64,13 @@ function handleSbmComplete() {
     const rowElement = resultsBody.querySelector('tr:first-child');
     const cells = rowElement.querySelectorAll('td');
 
-    // Проверяем, что это строка с данными (а не, например, строка "нет результатов")
     if (cells.length > 3) {
-        // 1. Извлекаем и преобразуем X, Y, R
         const x = parseFloat(cells[0].textContent);
         const y = parseFloat(cells[1].textContent);
         const r = parseFloat(cells[2].textContent);
 
-        // 2. Извлекаем результат попадания
         const isHit = cells[3].textContent.trim() === 'Попал';
 
-        // 3. Добавляем точку на график
         graphDrawer.addPoint({
             x,
             y,
@@ -91,7 +79,7 @@ function handleSbmComplete() {
         });
     }
     const newR = parseFloat(document.getElementById('main-form:r-input').value);
-    if (!isNaN(newR) && newR >= 1 && newR <= 4) {
+    if (!isNaN(newR) && (newR == 1 || newR == 1.5 || newR == 2 || newR == 2.5 || newR == 3)) {
         graphDrawer.setCurrentR(newR);
         graphDrawer.drawGraph(newR);
     } else {
@@ -125,13 +113,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
         });
-        if (graphDrawer.points.length !== 0) {
-            const lastPoint = graphDrawer.points[0]
-            const newR = lastPoint.r;
-            graphDrawer.setCurrentR(newR);
+        if (rInput.value !== "") {
+            graphDrawer.setCurrentR(parseFloat(rInput.value));
         } else {
-            const newR = parseFloat(rInput.value);
-            graphDrawer.setCurrentR(newR);
+            graphDrawer.setCurrentR(null);
         }
         graphDrawer.drawGraph(graphDrawer.currentR);
     };
@@ -161,8 +146,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-        if (yDecimal.lt(-5) || yDecimal.gt(3)) {
-            showNotification('Значение Y вне допустимого диапазона [-5, 3].');
+        if (yDecimal.lt(-5) || yDecimal.gt(5)) {
+            showNotification('Значение Y вне допустимого диапазона [-5, 5].');
             return;
         }
 

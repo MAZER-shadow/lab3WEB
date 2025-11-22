@@ -26,14 +26,14 @@ public class YBean implements Serializable {
             BigDecimal yValue = new BigDecimal(value.toString());
             verifyY(yValue);
         } catch (Exception e) {
-            FacesMessage message = new FacesMessage("y не является числом от -5 до 3");
+            FacesMessage message = new FacesMessage("y не является числом от -5 до 5");
             throw new ValidatorException(message);
         }
     }
 
     private void verifyY(BigDecimal y) {
         BigDecimal LOWER_BOUND = new BigDecimal("-5");
-        BigDecimal UPPER_BOUND = new BigDecimal("3");
+        BigDecimal UPPER_BOUND = new BigDecimal("5");
 
         if (!(y.compareTo(LOWER_BOUND) >= 0 && y.compareTo(UPPER_BOUND) <= 0)) {
             throw new RuntimeException();

@@ -2,7 +2,7 @@ import {Clock} from './clock.js';
 import {DateTime} from './date-time.js';
 
 $(() => {
-    const interval = 9000;
+    const interval = 13000;
 
     const clock = new Clock({
         $hour: $('.hour'),

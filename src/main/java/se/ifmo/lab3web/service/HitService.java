@@ -23,8 +23,8 @@ public class HitService {
     @Inject
     private HitDetector hitDetector;
 
-    public Hit createHit(HitDTO hitDto, HttpSession session) {
-        //сделать валидацию dto на то что там значения в допустимом диапазоне
+    public Hit createHit(HitDTO hitDto) {
+
         OffsetDateTime now = OffsetDateTime.now();
         long timeStart = System.nanoTime();
         boolean hitStatus = hitDetector.identifyHit(hitDto.getX(), hitDto.getY(), hitDto.getR());
@@ -37,16 +37,15 @@ public class HitService {
                 .timeStart(now)
                 .executionTime(timeExecution)
                 .hitStatus(hitStatus)
-                .userId(session.getId())
                 .build();
         return hitRepository.save(hitResult);
     }
 
-    public int deleteAllByUserId(HttpSession session) {
-        return hitRepository.deleteAllByUserId(session.getId());
+    public int deleteAll() {
+        return hitRepository.deleteAll();
     }
 
-    public List<Hit> findAllByUserId(String userId) {
-        return hitRepository.findAllByUserId(userId);
+    public List<Hit> findAll() {
+        return hitRepository.findAll();
     }
 }

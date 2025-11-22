@@ -1,7 +1,7 @@
 package se.ifmo.lab3web.bean;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -25,7 +25,7 @@ import java.util.List;
 @Setter
 @Getter
 @Named("resultBean")
-@SessionScoped
+@ApplicationScoped
 @NoArgsConstructor
 public class ResultBean implements Serializable {
     public static final String ERROR_MESSAGE = "Извините, непредвиденная ошибка";
@@ -39,17 +39,13 @@ public class ResultBean implements Serializable {
     private YBean yBean;
     @Inject
     private HitService hitService;
-    private HttpSession session;
 
     private LinkedList<Hit> results = new LinkedList<>();
 
     @PostConstruct
     public void init() {
         try {
-            FacesContext context = FacesContext.getCurrentInstance();
-            session = (HttpSession) context.getExternalContext().getSession(true);
-            String userId = session.getId();
-            List<Hit> resultsEntities = hitService.findAllByUserId(userId);
+            List<Hit> resultsEntities = hitService.findAll();
             results = new LinkedList<>(resultsEntities);
         } catch (Throwable e) {
             errorView.showError(ERROR_MESSAGE);
@@ -66,20 +62,20 @@ public class ResultBean implements Serializable {
                     .y(y)
                     .r(r)
                     .build();
-            Hit hit = hitService.createHit(hitDTO, session);
+            Hit hit = hitService.createHit(hitDTO);
             results.addFirst(hit);
         } catch (Throwable e) {
             errorView.showError(ERROR_MESSAGE);
         }
     }
 
-    public void deleteAllByUserId(HttpSession session) {
+    public void deleteAllByUserId() {
         try {
-            int valueOfDelete = hitService.deleteAllByUserId(session);
+            int valueOfDelete = hitService.deleteAll();
             results.clear();
             xBean.setX(null);
             yBean.setY(null);
-            rBean.setR(new BigDecimal(1));
+            rBean.setR((BigDecimal) null);
         } catch (Throwable e) {
             errorView.showError(ERROR_MESSAGE);
         }

@@ -6,9 +6,8 @@ class GraphDrawer {
         this.canvas.height = 400;
         this.center = { x: this.canvas.width / 2, y: this.canvas.height / 2 };
 
-        // Define pixel sizes for the minimum and maximum R values for smoother scaling
-        this.pixelR_at_R1 = this.canvas.width * 0.35; // Pixel size for R=1
-        this.pixelR_at_R4 = this.canvas.width * 0.15; // Pixel size for R=4
+        this.pixelR_at_R1 = this.canvas.width * 0.35;
+        this.pixelR_at_R5 = this.canvas.width * 0.15;
 
         this.currentR = null;
         this.points = [];
@@ -26,14 +25,12 @@ class GraphDrawer {
         this.points.push(point);
     }
 
-    // Вспомогательный метод для получения текущего pixelR
     getPixelR() {
         const dynamicR = this.currentR !== null ? this.currentR : 1;
-        const t = (dynamicR - 1) / 3;
-        return this.pixelR_at_R1 + t * (this.pixelR_at_R4 - this.pixelR_at_R1);
+        const t = (dynamicR - 1) / 4;
+        return this.pixelR_at_R1 + t * (this.pixelR_at_R5 - this.pixelR_at_R1);
     }
 
-    // Вспомогательный метод для преобразования координатной точки графика (x, y) в пиксели холста
     graphToCanvas(x, y, r) {
         const pixelR = this.getPixelR();
         const canvasX = (x / r) * pixelR;
@@ -41,84 +38,63 @@ class GraphDrawer {
 
         return {
             x: this.center.x + canvasX,
-            y: this.center.y - canvasY // В canvas Y увеличивается вниз
+            y: this.center.y - canvasY
         };
     }
 
-    // НОВЫЙ МЕТОД: Рисование символа Бэтмена
-    drawBatmanShape(r) {
+    drawTargetShape(r) {
         if (r === null) return;
 
         const ctx = this.ctx;
-        const scaleFactor = r / 7; // Исходная формула Бэтмена рассчитана на R=7
-        const step = 0.05;
+        const pixelR = this.getPixelR();
+        const pixelRHalf = pixelR / 2;
+
+        ctx.fillStyle = 'rgba(66, 133, 244, 0.7)';
+        const startPoint = this.graphToCanvas(0, 0, r);
 
         ctx.beginPath();
-        ctx.fillStyle = 'rgba(255, 165, 0, 0.5)'; // Оранжевый цвет для контраста
 
-        // --- Верхняя часть ---
-        for (let localX = -7; localX <= 7; localX += step) {
-            const absX = Math.abs(localX);
-            let localY;
+        let point0RHalf = this.graphToCanvas(0, r/2, r);
+        ctx.moveTo(point0RHalf.x, point0RHalf.y);
 
-            if (absX >= 3 && absX <= 7) {
-                // Крылья (эллипс)
-                localY = 3 * Math.sqrt(Math.max(0, 1 - (localX / 7) ** 2));
-            } else if (absX >= 1.5 && absX < 3) {
-                // Щёки (нижняя часть окружности)
-                const dx = absX - 2.25;
-                localY = 2.0 - Math.sqrt(Math.max(0, 1 - dx * dx / (0.75 ** 2)));
-            } else if (absX >= 0.6 && absX < 1.5) {
-                // Уши
-                if (absX <= 0.9) {
-                    // Верх уха (полуокружность)
-                    const dx = absX - 0.75;
-                    localY = 3 + 0.4 * Math.sqrt(Math.max(0, 1 - dx * dx / (0.15 ** 2)));
-                } else {
-                    // Скос уха
-                    localY = 2.0 + (1.5 - absX) * 0.3;
-                }
-            } else {
-                // Плоская голова
-                localY = 2.8;
-            }
+        ctx.arc(
+            this.center.x,
+            this.center.y,
+            pixelRHalf,
+            Math.PI * 1.5,
+            Math.PI,
+            true
+        );
 
-            const worldX = localX * scaleFactor;
-            const worldY = localY * scaleFactor;
+        ctx.lineTo(startPoint.x, startPoint.y);
 
-            // Преобразование мировых координат (относительно r) в пиксели холста
-            const { x: pixelX, y: pixelY } = this.graphToCanvas(worldX, worldY, r);
+        ctx.closePath();
+        ctx.fill();
 
-            if (localX === -7) {
-                ctx.moveTo(pixelX, pixelY);
-            } else {
-                ctx.lineTo(pixelX, pixelY);
-            }
-        }
+        ctx.beginPath();
 
-        // --- Нижняя часть: тело ---
-        for (let localX = 7; localX >= -7; localX -= step) {
-            const absX = Math.abs(localX);
-            let localY;
+        ctx.moveTo(startPoint.x, startPoint.y);
 
-            if (absX >= 4 && absX <= 7) {
-                // Нижние крылья
-                localY = -3 * Math.sqrt(Math.max(0, 1 - (localX / 7) ** 2));
-            } else {
-                // Тело (сложная формула)
-                const term1 = Math.abs(localX / 2);
-                const term2 = ((3 * Math.sqrt(33) - 7) / 112) * localX ** 2;
-                const term3 = Math.sqrt(Math.max(0, 1 - (Math.abs(absX - 2) - 1) ** 2));
-                localY = term1 - term2 - 3 + term3;
-            }
+        let pointMinusR0 = this.graphToCanvas(-r, 0, r);
+        ctx.lineTo(pointMinusR0.x, pointMinusR0.y);
 
-            const worldX = localX * scaleFactor;
-            const worldY = localY * scaleFactor;
+        let pointMinusRMinusRHalf = this.graphToCanvas(-r, -r/2, r);
+        ctx.lineTo(pointMinusRMinusRHalf.x, pointMinusRMinusRHalf.y);
 
-            const { x: pixelX, y: pixelY } = this.graphToCanvas(worldX, worldY, r);
+        let point0MinusRHalf = this.graphToCanvas(0, -r/2, r);
+        ctx.lineTo(point0MinusRHalf.x, point0MinusRHalf.y);
 
-            ctx.lineTo(pixelX, pixelY);
-        }
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+
+        ctx.moveTo(startPoint.x, startPoint.y);
+
+        let pointRHalf0 = this.graphToCanvas(r/2, 0, r);
+        ctx.lineTo(pointRHalf0.x, pointRHalf0.y);
+
+        ctx.lineTo(point0MinusRHalf.x, point0MinusRHalf.y);
 
         ctx.closePath();
         ctx.fill();
@@ -156,21 +132,24 @@ class GraphDrawer {
         ctx.lineTo(center.x + 12, 25);
         ctx.stroke();
 
-        ctx.font = '12px Arial';
+        const dynR = this.currentR !== null ? this.currentR : 1;
+        const R_range = 5 - 1;
+        const Font_range = 20 - 12;
+        const t = (dynR - 1) / R_range;
+        const dynamicFontSize = 20 - t * Font_range;
+
+        ctx.font = `${dynamicFontSize.toFixed(0)}px Arial`;
         ctx.fillStyle = '#000';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
-        // Linear interpolation for smoother scaling
         const dynamicR = this.currentR !== null ? this.currentR : 1;
         const pixelR = this.getPixelR();
         const pixelRHalf = pixelR / 2;
 
-        // Determine axis labels dynamically
-        const rLabel = this.currentR !== null ? dynamicR.toFixed(2) : "R";
-        const rHalfLabel = this.currentR !== null ? (dynamicR / 2).toFixed(2) : "R/2";
+        const rLabel = this.currentR !== null ? dynamicR.toFixed(1) : "R";
+        const rHalfLabel = this.currentR !== null ? (dynamicR / 2).toFixed(1) : "R/2";
 
-        // Draw axis labels
         ctx.fillText("X", width - 20, center.y + 30);
         ctx.fillText("Y", center.x - 30, 20);
 
@@ -184,10 +163,8 @@ class GraphDrawer {
         ctx.fillText(`-${rHalfLabel}`, center.x - 30, center.y + pixelRHalf);
         ctx.fillText(`-${rLabel}`, center.x - 30, center.y + pixelR);
 
-        // ВЫЗОВ: Рисуем Бэтмена
-        this.drawBatmanShape(dynamicR);
+        this.drawTargetShape(dynamicR);
 
-        // Redraw all points
         this.points.forEach(point => {
             this.drawPoint(point.x, point.y, point.isHit, point.r);
         });
@@ -202,11 +179,9 @@ class GraphDrawer {
         const ctx = this.ctx;
         const pixelR = this.getPixelR();
 
-        // Ваша логика масштабирования точки
         const scaledX = (x / r) * this.currentR;
         const scaledY = (y / r) * this.currentR;
 
-        // Теперь преобразуем эти новые 'scaled' координаты в пиксели холста
         const canvasX = (scaledX / this.currentR) * pixelR;
         const canvasY = (scaledY / this.currentR) * pixelR;
 
@@ -222,14 +197,10 @@ class GraphDrawer {
         ctx.fill();
     }
 
-    // --- ВОССТАНОВЛЕННЫЕ МЕТОДЫ ДЛЯ МЫШИ ---
-
-    // Перерисовка графика без очистки points, но с учетом текущего R
     clearDynamicElements() {
         this.drawGraph(this.currentR);
     }
 
-    // Рисование динамических линий и координат
     drawMouseLines(mouseX, mouseY, displayX, displayY) {
         this.clearDynamicElements();
 
@@ -240,11 +211,9 @@ class GraphDrawer {
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
         ctx.lineWidth = 1;
 
-        // Линия по X
         ctx.moveTo(mouseX, 0);
         ctx.lineTo(mouseX, canvas.height);
 
-        // Линия по Y
         ctx.moveTo(0, mouseY);
         ctx.lineTo(canvas.width, mouseY);
         ctx.stroke();
@@ -254,24 +223,21 @@ class GraphDrawer {
         ctx.textAlign = 'left';
         ctx.textBaseline = 'bottom';
 
-        // Отображение координат
         ctx.fillText(`X: ${displayX.toFixed(2)}`, mouseX + 10, mouseY - 10);
         ctx.fillText(`Y: ${displayY.toFixed(2)}`, mouseX + 10, mouseY + 20);
     }
 
-    // Очистка динамических элементов (линий мыши)
     clearMouseLines() {
         this.clearDynamicElements();
     }
 
-    // Преобразование координат холста в координаты графика
     canvasToGraphCoords(canvasX, canvasY) {
         if (this.currentR === null) {
             return { x: 0, y: 0 };
         }
 
-        const t = (this.currentR - 1) / 3;
-        const pixelR = this.pixelR_at_R1 + t * (this.pixelR_at_R4 - this.pixelR_at_R1);
+        const t = (this.currentR - 1) / 4;
+        const pixelR = this.pixelR_at_R1 + t * (this.pixelR_at_R5 - this.pixelR_at_R1);
 
         const x = ((canvasX - this.center.x) * this.currentR) / pixelR;
         const y = ((this.center.y - canvasY) * this.currentR) / pixelR;

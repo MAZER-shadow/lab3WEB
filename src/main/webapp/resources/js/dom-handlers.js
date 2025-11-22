@@ -23,8 +23,16 @@ function setupInputValidation(input) {
 }
 
 function getPermittedXValues() {
-    return [-5, -4, -3, -2, -1, 0, 1, 2, 3];
+    return [-3, -2, -1, 0, 1, 2, 3];
 }
+
+const ALLOWED_VALUES = [
+    new Decimal(1),
+    new Decimal(1.5),
+    new Decimal(2),
+    new Decimal(2.5),
+    new Decimal(3)
+];
 
 function validateInputs() {
     let xBtn = document.querySelector('input[name="x-visible"]:checked')?.value;
@@ -38,6 +46,8 @@ function validateInputs() {
     try {
         const y = new Decimal(yValue);
         const r = new Decimal(rValue);
+
+        const isValid = ALLOWED_VALUES.some(allowedR => r.equals(allowedR));
 
         if (!xBtn) {
             showNotification('Пожалуйста выберите X');
@@ -58,8 +68,8 @@ function validateInputs() {
             return null;
         }
 
-        if (y.lt(-5) || y.gt(3)) {
-            showNotification('Введите Y в промежутке от -5 до 3');
+        if (y.lt(-5) || y.gt(5)) {
+            showNotification('Введите Y в промежутке от -5 до 5');
             yInput.focus();
             return null;
         }
@@ -70,8 +80,8 @@ function validateInputs() {
             return null;
         }
 
-        if (r.lt(1) || r.gt(4)) {
-            showNotification('Введите R в промежутке от 1 до 4');
+        if (!isValid) {
+            showNotification('Значение r должно быть 1, 1.5, 2, 2.5 или 3.');
             rInput.focus();
             return null;
         }
@@ -88,7 +98,9 @@ function setFormFromPoint(point) {
     const xBut = document.getElementById('graph-form:x-graph-hidden');
     const yBut = document.getElementById('graph-form:y-graph-hidden');
     const rBut = document.getElementById('graph-form:r-graph-hidden');
+    const yButReal = document.getElementById('main-form:y-input');
 
+    yButReal.value = point.y;
     xBut.value = point.x;
     yBut.value = point.y;
     rBut.value = point.r;

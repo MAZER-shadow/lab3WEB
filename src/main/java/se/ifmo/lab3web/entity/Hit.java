@@ -30,6 +30,4 @@ public class Hit implements Serializable {
     private long executionTime;
 
     private OffsetDateTime timeStart;
-
-    private String userId;
 }

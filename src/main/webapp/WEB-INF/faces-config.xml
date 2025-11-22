@@ -3,48 +3,6 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                                  https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd">
-
-
-    <managed-bean>
-        <managed-bean-name>xBean</managed-bean-name>
-        <managed-bean-class>se.ifmo.lab3web.point.XBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>yBean</managed-bean-name>
-        <managed-bean-class>se.ifmo.lab3web.point.YBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>rBean</managed-bean-name>
-        <managed-bean-class>se.ifmo.lab3web.point.RBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
-
-    <managed-bean>
-        <managed-bean-name>resultBean</managed-bean-name>
-        <managed-bean-class>se.ifmo.lab3web.bean.ResultBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-        <managed-property>
-            <property-name>XBean</property-name>
-            <value>#{xBean}</value>
-        </managed-property>
-        <managed-property>
-            <property-name>YBean</property-name>
-            <value>#{yBean}</value>
-        </managed-property>
-        <managed-property>
-            <property-name>RBean</property-name>
-            <value>#{rBean}</value>
-        </managed-property>
-    </managed-bean>
-
-    <managed-bean>
-        <managed-bean-name>formatter</managed-bean-name>
-        <managed-bean-class>se.ifmo.lab3web.service.formatter.BigDecimalFormatter</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
-    </managed-bean>
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>

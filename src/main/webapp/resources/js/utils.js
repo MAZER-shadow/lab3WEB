@@ -1,4 +1,3 @@
-// utils.js
 function showNotification(message, isError = true) {
     let notificationContainer = document.getElementById('notification-container');
     if (!notificationContainer) {
