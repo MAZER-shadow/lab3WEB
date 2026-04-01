@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="se.ifmo.lab3web.service.HitDetectorTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-04-01T10:56:55.511Z" hostname="DESKTOP-B2F7SIB" time="0.02">
+  <properties/>
+  <testcase name="Точка далеко за пределами области — промах" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.005"/>
+  <testcase name="Точка сильно выше области — промах" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.002"/>
+  <testcase name="Симметрия: точки (x,0) и (-x,0) дают одинаковый результат" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.002"/>
+  <testcase name="r &lt;= 0 — всегда промах" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.001"/>
+  <testcase name="Точка на оси X внутри фигуры — попадание" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.001"/>
+  <testcase name="Точка сильно ниже области — промах" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.001"/>
+  <testcase name="Точка внутри области при большом R — попадание" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.001"/>
+  <testcase name="Центр (0,0) при r&gt;0 — попадание" classname="se.ifmo.lab3web.service.HitDetectorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

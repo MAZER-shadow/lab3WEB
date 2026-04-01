@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-04-01T10:56:55.532Z" hostname="DESKTOP-B2F7SIB" time="0.019">
+  <properties/>
+  <testcase name="Большое число — экспоненциальный формат" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.007"/>
+  <testcase name="Число с &gt; 5 знаками после точки — экспоненциальный формат" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.001"/>
+  <testcase name="null возвращает null" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.001"/>
+  <testcase name="Число с &lt;= 5 знаками после точки — plain формат" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.001"/>
+  <testcase name="Ноль форматируется как '0'" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.001"/>
+  <testcase name="Обычное число без экспоненты" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.001"/>
+  <testcase name="Маленькое число — экспоненциальный формат" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.001"/>
+  <testcase name="Отрицательное число форматируется корректно" classname="se.ifmo.lab3web.service.formatter.BigDecimalFormatterTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
