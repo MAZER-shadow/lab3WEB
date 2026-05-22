@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Build-Jdk: Amazon Corretto 25.0.1
+Implementation-Vendor-Id: se.ifmo
+Implementation-Title: lab3WEB
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: lab3WEB
+

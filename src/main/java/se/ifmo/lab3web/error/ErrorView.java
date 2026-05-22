@@ -5,6 +5,7 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import lombok.Setter;
+import se.ifmo.lab3web.util.Messages;
 
 import java.io.IOException;
 
@@ -16,7 +17,7 @@ public class ErrorView {
 
     public String getMessage() {
         if (message==null || message.isEmpty()){
-            return "Internal error occurred";
+            return Messages.get("error.internal");
         }
         return message;
     }

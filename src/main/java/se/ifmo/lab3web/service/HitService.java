@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import se.ifmo.lab3web.dto.HitDTO;
 import se.ifmo.lab3web.entity.Hit;
+import se.ifmo.lab3web.jmx.JmxRegistrar;
 import se.ifmo.lab3web.repository.Repository;
 
 import java.time.OffsetDateTime;
@@ -22,14 +23,19 @@ public class HitService {
     private Repository<Hit> hitRepository;
     @Inject
     private HitDetector hitDetector;
+    @Inject
+    private JmxRegistrar jmxRegistrar;
 
     public Hit createHit(HitDTO hitDto, HttpSession session) {
-        //сделать валидацию dto на то что там значения в допустимом диапазоне
         OffsetDateTime now = OffsetDateTime.now();
         long timeStart = System.nanoTime();
         boolean hitStatus = hitDetector.identifyHit(hitDto.getX(), hitDto.getY(), hitDto.getR());
         long timEnd = System.nanoTime();
         long timeExecution = timEnd - timeStart;
+
+        jmxRegistrar.getClickInterval().recordClick();
+        jmxRegistrar.getPointStats().recordPoint(hitDto.getX(), hitDto.getY(), hitDto.getR(), hitStatus);
+
         Hit hitResult = Hit.builder()
                 .x(hitDto.getX())
                 .y(hitDto.getY())

@@ -9,6 +9,7 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import se.ifmo.lab3web.util.Messages;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ public class YBean implements Serializable {
             BigDecimal yValue = new BigDecimal(value.toString());
             verifyY(yValue);
         } catch (Exception e) {
-            FacesMessage message = new FacesMessage("y не является числом от -5 до 3");
+            FacesMessage message = new FacesMessage(Messages.get("validation.y.invalid"));
             throw new ValidatorException(message);
         }
     }

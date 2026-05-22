@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import se.ifmo.lab3web.entity.Hit;
+import se.ifmo.lab3web.util.Messages;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class HitRepository implements Repository<Hit> {
             em.persist(entity);
             return entity;
         } catch (Exception e) {
-            throw new RuntimeException("Ошибка при сохранении сущности Hit.", e);
+            throw new RuntimeException(Messages.get("repository.hit.save.error"), e);
         }
     }
 
@@ -35,7 +36,7 @@ public class HitRepository implements Repository<Hit> {
                 em.remove(hit);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Ошибка при удалении сущности Hit с ID: " + id, e);
+            throw new RuntimeException(Messages.get("repository.hit.delete.error") + " " + id, e);
         }
     }
 
@@ -44,7 +45,7 @@ public class HitRepository implements Repository<Hit> {
         try {
             em.merge(entity);
         } catch (Exception e) {
-            throw new RuntimeException("Ошибка при обновлении сущности Hit.", e);
+            throw new RuntimeException(Messages.get("repository.hit.update.error"), e);
         }
     }
 
@@ -77,7 +78,7 @@ public class HitRepository implements Repository<Hit> {
             int value = query.executeUpdate();
             return value;
         } catch (Exception e) {
-            throw new RuntimeException("Ошибка при массовом удалении записей пользователя: " + userId, e);
+            throw new RuntimeException(Messages.get("repository.hit.deleteAll.error") + " " + userId, e);
         }
     }
 }

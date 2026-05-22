@@ -9,6 +9,7 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import se.ifmo.lab3web.util.Messages;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -23,14 +24,14 @@ public class XBean implements Serializable {
 
     public void validateXBeanValue(FacesContext context, UIComponent component, Object value) {
         if (value == null) {
-            FacesMessage message = new FacesMessage("X должен быть выбран или кликнут на графике");
+            FacesMessage message = new FacesMessage(Messages.get("validation.x.required"));
             throw new ValidatorException(message);
         }
 
         try {
             BigDecimal xValue = new BigDecimal(value.toString());
         } catch (NumberFormatException e) {
-            FacesMessage message = new FacesMessage("X должен быть числом");
+            FacesMessage message = new FacesMessage(Messages.get("validation.x.number"));
             throw new ValidatorException(message);
         }
     }

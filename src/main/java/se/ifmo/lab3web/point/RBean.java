@@ -9,6 +9,7 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import se.ifmo.lab3web.util.Messages;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,7 +28,7 @@ public class RBean implements Serializable {
             BigDecimal rValue = new BigDecimal(value.toString());
             verifyR(rValue);
         } catch (Exception e) {
-            FacesMessage message = new FacesMessage("R должен быть выбран от 1 до 4 с шагом 0.25");
+            FacesMessage message = new FacesMessage(Messages.get("validation.r.invalid"));
             throw new ValidatorException(message);
         }
     }
